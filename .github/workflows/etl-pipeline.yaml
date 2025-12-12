@@ -31,4 +31,4 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace import --path ./src/etl_script.py --overwrite /Shared/jhansi/etl_script.py
+          databricks workspace import  ./src/etl_script.py --overwrite /Shared/jhansi/etl_script.py
