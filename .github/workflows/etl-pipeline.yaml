@@ -28,11 +28,4 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace import --path ./src/etl_script.py --overwrite /Shared/ETL/etl_script.py
-Step 8: The Final Push and Workflow Debugging
-Commit and push all your files to GitHub.
-
-git add .
-git commit -m "feat: Add ETL scripts, tests, and initial pipeline"
-git push origin main
-G
+          databricks workspace import --path ./src/etl_script.py --overwrite /Shared/jhansi/etl_script.py
