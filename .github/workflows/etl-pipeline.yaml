@@ -7,6 +7,7 @@ on:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,16 +20,31 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
-      
       # - name: Run Unit Tests
       #   run: pytest tests/
 
-      - name: Deploy Python script to Databricks
+      - name: Deploy entire src folder to Databricks
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace import --language python --overwrite ./src /Shared/jhansi/src
+          # Create destination directory in Databricks
+          databricks workspace mkdirs /Shared/jhansi/src
+
+          # Upload all .py files recursively from ./src to /Shared/jhansi/src
+          for file in $(find ./src -type f -name "*.py"); do
+            target="/Shared/jhansi/src/${file#./src/}"
+            echo "Uploading $file -> $target"
+
+            databricks workspace import \
+              --language python \
+              --overwrite \
+              "$file" \
+              "$target"
+          done
+
+
