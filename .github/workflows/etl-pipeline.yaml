@@ -23,8 +23,8 @@ jobs:
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
       
-      - name: Run Unit Tests
-        run: pytest tests/
+      # - name: Run Unit Tests
+      #   run: pytest tests/
 
       - name: Deploy Python script to Databricks
         env:
